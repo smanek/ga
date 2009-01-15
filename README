@@ -1,0 +1,36 @@
+To use my Lisp Genetic Algorithm program, you must use the Steel Bank Common Lisp (SBCL) implementation of Lisp. My program uses some non-portable extensions to Lisp to allow multithreading (performance will scale almost linearly with the number of CPU cores, up to the size of the population).
+
+To install SBCL (on Linux) run the following commands:
+$ wget http://internap.dl.sourceforge.net/sourceforge/sbcl/sbcl-1.0.23-x86-linux-binary.tar.bz2
+$ tar -jxvf sbcl-1.0.23-x86-linux-binary.tar.bz2
+$ cd sbcl-1.0.23-x86-linux/
+$ sudo sh install.sh
+
+Note, that if you don't have sudo access, you can alternatively install SBCL in your home directory with the following commands:
+$ INSTALL_ROOT=/home/me/install_dir sh install.sh
+You will then need to add /home/me/install_dir/bin to your PATH environment variable with a command like:
+$ export PATH=/home/me/install_dir/bin/:$PATH
+You will then need to set the SBCL_HOME environment variable, so that sbcl can find its core, with a command like:
+$ export SBCL_HOME=/home/me/install_dir/lib/sbcl/
+Remember, you only need to run the above commands if you can't do "sudo sh install.sh"
+
+Before you run SBCL, you might want to use this opportunity to tweak a few settings in the global.lisp file. All the defaults are pretty reasonable, but you may want to, for example, change the output directory (by modifying the *output-directory* special variable).
+
+Now that SBCL is installed, you will want to run it. If you're working with large images or populations, be sure to use the --dynamic-space-size flag to increase the HEAP size. For example, to use a 3GB heap, run:
+$ sbcl --dynamic-space-size 3000
+For smallish images (less than a few tens of thousands of pixels) with smallish populations (less than 50 or so), that shouldn't be neccessary and you can just run:
+$ sbcl
+
+Now that you are in the SBCL interpreter type the following commands, replacing anything with all caps as appropriate:
+(require 'asdf)
+(push "FULL_PATH_TO_MY_PROJECT_WITH_TRAILING_SLASH" asdf:*central-registry*)
+(asdf:oos 'asdf:load-op :ga)
+(ga:solution "FULL_PATH_TO_BITMAP_TO_IMITATE")
+
+The first command loads Another System Definition Facility (ASDF).
+The second tells ASDF where to find my project.
+The third tells ASDF to load my project (based on the details found in my ga.asd definition file)
+And the final command runs the program to position polygons to look like the bitmap to imitate.
+
+I'm including a bitmaps you could use (japan.bmp, mccarthy-small.bmp, mccarthy_face.bmp, monalisa.bmp, monalisa_face.bmp).
+I'm also including a few videos of the evolution in progress (japan.mp4, mccarthy.mp4, monalisa.mp4).

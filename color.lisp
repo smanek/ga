@@ -1,5 +1,7 @@
 (in-package :ga)
 
+;;the color class uses a premultiplied alpha. 
+;;It uses 8 bit integers (0-255) to represent the red, green, and blue components of a color.
 (defclass color ()
   ((red   :accessor get-red   
 	  :initarg :red 
@@ -28,18 +30,21 @@
 (defparameter %blue-byte-spec (byte 8 0))
 
 (defmethod color-to-rgb ((c color))
+  ;;get rid of premultiplied alpha, and convert an instance of the color class to a simple 24 bit RGB color
   (with-slots (red green blue alpha) c
     (the (unsigned-byte 24) (dpb (floor (/ red alpha)) %red-byte-spec ;;get rid of premultiplied alpha
 				 (dpb (floor (/ green alpha)) %green-byte-spec
 				      (dpb (floor (/ blue alpha)) %blue-byte-spec 0))))))
 
 (defun rgb-to-color (c)
+  ;;converts a 24bit RGB color to an instance of the color class. Assumes the color is opaque (i.e., alpha=1)
   (make-instance 'color :red (ldb %red-byte-spec c)
 		        :green (ldb %green-byte-spec c)
 			:blue (ldb %blue-byte-spec c)
 			:alpha 1))
 
 (defmethod combine-pixels ((original color) (new color))
+  ;;The color you get by overwriting one color with another. Takes care of alpha blending
   (with-slots ((ro red) (go green) (bo blue) (ao alpha)) original
     (with-slots ((rn red) (gn green) (bn blue) (an alpha)) new
       (make-instance 'color :red (+ rn (* (- 1 an) ro))
@@ -49,6 +54,7 @@
 
 
 (defmethod color-distance ((a color) (b color))
+  ;;The euclidean distance between two color. An acceptable heuristic for how similar two colors look
   (with-slots ((ro red) (go green) (bo blue)) a
     (with-slots ((rn red) (gn green) (bn blue)) b
       (+ (square (- ro rn))

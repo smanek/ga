@@ -12,15 +12,15 @@
 ;;all dependencies.
 
 (asdf:defsystem :ga
-  :version "0.1"
+  :version "0.2"
   :author "Shaneal Manek (smanek@gmail.com)"
   :serial t
   :components
   ((:file "global") ;;global variables and settings
    (:file "misc") ;;misc utility functions
    (:file "weighted-list") ;;set of functions for dealing with lists weighted by probability
-   (:file "color") ;;color manipulation
-   (:file "bitmap") ;;bitmap manipulation, i/o
-   (:file "polygon") ;;a simple polygon class
-   (:file "chromosome") ;;a chromosome class
-   (:file "evolve"))) ;;actually run the evolution
+   (:file "color") ;;color class, and manipulation methods
+   (:file "bitmap") ;;bitmap manipulation, file i/o
+   (:file "polygon") ;;a simple polygon/edge class, along with some methods to draw on a bitmap
+   (:file "chromosome") ;;a chromosome class, with methods for mutation, breeding, etc
+   (:file "evolve"))) ;;actually run the evolution, keep track of population
