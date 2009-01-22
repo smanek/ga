@@ -23,7 +23,7 @@
 (defmethod print-object ((c color) stream)
   (print-unreadable-object (c stream :type t)
     (with-slots (red green blue alpha) c
-      (format stream "(~A,~A,~A,~A)" red green blue alpha))))
+      (format stream "(R: ~A,G: ~A,B: ~A,A: ~A)" red green blue alpha))))
 
 (defparameter %red-byte-spec (byte 8 16))
 (defparameter %green-byte-spec (byte 8 8))

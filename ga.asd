@@ -2,7 +2,7 @@
 
 (defpackage :ga
   (:use :cl :asdf)
-  (:export :solution))
+  (:export :polygon-evolution))
 
 (in-package :ga)
 
@@ -21,6 +21,8 @@
    (:file "weighted-list") ;;set of functions for dealing with lists weighted by probability
    (:file "color") ;;color class, and manipulation methods
    (:file "bitmap") ;;bitmap manipulation, file i/o
+   (:file "threading") ;;detects if you are using SBCL with multithreading support, and if so enables it.
    (:file "polygon") ;;a simple polygon/edge class, along with some methods to draw on a bitmap
-   (:file "chromosome") ;;a chromosome class, with methods for mutation, breeding, etc
+   (:file "chromosome") ;;a generic chromosome class, which all other chromosomes must derive from
+   (:file "polygon-chromosome") ;;a chromosome sub-type, of images of polygons
    (:file "evolve"))) ;;actually run the evolution, keep track of population

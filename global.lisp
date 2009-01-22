@@ -3,7 +3,8 @@
 ;;the directory where the program should write its results to.
 ;;(concatenate 'string (sb-ext:posix-getenv "HOME") "/") tells it to output to ~/
 ;;make sure you remember to add a trailing slash if you change it
-(defparameter *output-directory* (concatenate 'string (sb-ext:posix-getenv "HOME") "/")) 
+;(defparameter *output-directory* (concatenate 'string (sb-ext:posix-getenv "HOME") "/")) 
+(defparameter *output-directory* "/home/smanek/temp/results/") 
 
 (defparameter *population-size* 10) ;;the total population size
 (defparameter *bred-per-gen* 5) ;;number of new children that should be bred per generation
